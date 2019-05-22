@@ -24,55 +24,31 @@
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
           </div>
         </div>
-        <div class="row">
-        	<div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
+				<!--experts listing-->
+				
+        <div class="row justify-content-center">
+				{% if experts %}
+					{% for expert in experts %}
+							<div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-      				<div class="img mb-4" style="background-image: url(images/person_1.jpg);"></div>
+      				<div class="img mb-4" style="background-image: url({{expert.photo.url}});"></div>
       				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Mellisa Smith</a></h3>
-      					<span class="position">Stylist</span>
+      					<h3><a href="teacher-single.html">{{ expert.name}} {{expert.lastname}}</a></h3>
+      					<span class="position">{{expert.position}}</span>
       					<div class="text">
-	        				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	        				<p>{{expert.description}}</p>
 	        			</div>
       				</div>
         		</div>
         	</div>
-        	<div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
-        		<div class="staff">
-      				<div class="img mb-4" style="background-image: url(images/person_2.jpg);"></div>
-      				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Marie Mush</a></h3>
-      					<span class="position">Fashionist</span>
-      					<div class="text">
-	        				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	        			</div>
-      				</div>
-        		</div>
-        	</div>
-        	<div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
-        		<div class="staff">
-      				<div class="img mb-4" style="background-image: url(images/person_3.jpg);"></div>
-      				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Ana Jacobson</a></h3>
-      					<span class="position">Makeup Stylist</span>
-      					<div class="text">
-	        				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	        			</div>
-      				</div>
-        		</div>
-        	</div>
-        	<div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
-        		<div class="staff">
-      				<div class="img mb-4" style="background-image: url(images/person_4.jpg);"></div>
-      				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Ivan Dorchsner</a></h3>
-      					<span class="position">Nail Specialist</span>
-      					<div class="text">
-	        				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	        			</div>
-      				</div>
-        		</div>
-        	</div>
+					{% endfor %}
+				{% else %}
+					<div class='col-md-12'>
+						<p>No experts available</p>
+					</div>
+				{% endif %}
+        
+        
         </div>
       </div>
     </section>
