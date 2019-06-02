@@ -3180,6 +3180,7 @@ input[type="button"].btn-block {
   list-style: none; }
 
 .nav-link {
+  color:red;
   display: block;
   padding: 0.5rem 1rem; }
   .nav-link:hover, .nav-link:focus {
@@ -7316,6 +7317,7 @@ h1, h2, h3, h4, h5,
       .ftco-navbar-light .navbar-brand {
         color: #000; } }
   .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+    font-family: "Montserrat", Arial, sans-serif;
     font-size: 13px;
     padding-top: .9rem;
     padding-bottom: .9rem;
@@ -7462,7 +7464,7 @@ h1, h2, h3, h4, h5,
 
 .navbar-brand {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 22px !important;
   text-transform: uppercase;
   letter-spacing: 1px;
   line-height: 1; }
@@ -8085,7 +8087,7 @@ textarea.form-control {
 
 .ftco-footer {
   font-size: 16px;
-  padding: 7em 0;
+  padding: 3em 0;
   background: #252525; }
   .ftco-footer .ftco-footer-logo {
     text-transform: uppercase;

@@ -62,6 +62,24 @@
 	          <li class="nav-item">
 							<a href="contact.html" class="nav-link">Contact</a>
 						</li>
+						<li 
+							{% if 'login' == request.path %}
+								class="nav-item active"
+							{% else %}
+								class="nav-item"
+							{% endif %}
+						>
+							<a href="{% url 'login' %}" class="nav-link">Login</a>
+						</li>
+						<li 
+							{% if 'register' == request.path %}
+								class="nav-item active"
+							{% else %}
+								class="nav-item"
+							{% endif %}
+						>
+							<a href="{% url 'register' %}" class="nav-link">Register</a>
+						</li>
 	        </ul>
 	      </div>
 	    </div>
