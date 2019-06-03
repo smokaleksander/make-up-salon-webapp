@@ -101,26 +101,27 @@
 	<!--register form-->
 		<div class="container-register100" style="background-image: url('{% static 'img/bg_1.jpg' %}');">
 		<div class="wrap-register100 p-l-55 p-r-55 p-t-55 p-b-30">
-			<form class="login100-form validate-form">
+			<form class="login100-form validate-form" action="{% url 'register'%}" method='POST'>
+            {% csrf_token %}
 				<span class="login100-form-title p-b-30">
 					Sign Up
 				</span>
-                
+                {% include 'partials/_alerts.html' %}
                 <div class="row row-space justify-content-center ">
 				    <div class="wrap-input100 validate-input  my-3 col-sm-5 " data-validate="Enter Your firstname">
-					<input class="input100" type="text" name="firstname" placeholder="firstname">
+					<input class="input100" type="text" name="firstname" placeholder="firstname" required>
 					<span class="focus-input100"></span>
 				    </div>
                     <div class='col-sm-1 '></div>
 				    <div class="wrap-input100 validate-input  my-3 col-sm-5 " data-validate = "Enter Yout lastname">
-					<input class="input100" type="text" name="lastname" placeholder="lastname">
+					<input class="input100" type="text" name="lastname" placeholder="lastname" required>
 					<span class="focus-input100"></span>
 				    </div>
                 </div>
 
                 <div class="row row-space justify-content-center">
 				    <div class="wrap-input100 validate-input  col-sm-5 my-3" data-validate="Enter Your phone number">
-					<input class="input100" type="tel" name="phone" placeholder="phone number">
+					<input class="input100" type="tel" name="phone" placeholder="phone number" required>
 					<span class="focus-input100"></span>
 				    </div>
                     <div class='col-sm-1 '></div>
@@ -138,19 +139,25 @@
 				    </div>
                 </div>
                 <div class="row row-space justify-content-center">
-                    <div class="wrap-input100 validate-input   col-sm-11   my-3" data-validate="Enter Your firstname">
-					    <input class="input100" type="email" name="email" placeholder="email adress">
+                    <div class="wrap-input100 validate-input   col-sm-11   my-3" data-validate="Enter Your email adress">
+					    <input class="input100" type="email" name="email" placeholder="email adress" required>
+					    <span class="focus-input100"></span>
+				    </div>
+                </div>
+				 <div class="row row-space justify-content-center">
+                    <div class="wrap-input100 validate-input   col-sm-11   my-3" data-validate="Enter Your user name">
+					    <input class="input100" type="text" name="username" placeholder="user name" required>
 					    <span class="focus-input100"></span>
 				    </div>
                 </div>
                 <div class="row row-space justify-content-center">
 				    <div class="wrap-input100 validate-input  my-3 col-sm-5 " data-validate="Enter Your password">
-					<input class="input100" type="password" name="password" placeholder="password">
+					<input class="input100" type="password" name="password" placeholder="password" required>
 					<span class="focus-input100"></span>
 				    </div>
                     <div class='col-sm-1 '></div>
 				    <div class="wrap-input100 validate-input  my-3 col-sm-5 " data-validate = "Reenter Yout password">
-					<input class="input100" type="password" name="password2" placeholder="confirm password">
+					<input class="input100" type="password" name="password2" placeholder="confirm password" required>
 					<span class="focus-input100"></span>
 				    </div>
                 </div>
@@ -159,7 +166,7 @@
 						Sign Up
 					</button>
 				</div>
-
+                
 				
 
 				<div class="text-center">
@@ -177,7 +184,7 @@
     <!--FOOTER-->
     {% include 'partials/_footer.html' %}
 
-        
+    
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
