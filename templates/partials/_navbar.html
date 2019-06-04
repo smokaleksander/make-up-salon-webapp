@@ -1,6 +1,12 @@
 {% load static %}
 <!-- NAVBAR -->
-    <div class="hero-wrap js-fullheight" style="background-image: url({% static 'img/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+    <div 
+			{% if '/accounts/dashboard' == request.path %}
+				class="hero-wrap js-fullheight d-none"
+			{% else %}
+				class="hero-wrap js-fullheight" style="background-image: url({% static 'img/bg_1.jpg' %});" data-stellar-background-ratio="0.5"
+			{% endif %}
+		>
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -62,24 +68,44 @@
 	          <li class="nav-item">
 							<a href="contact.html" class="nav-link">Contact</a>
 						</li>
-						<li 
-							{% if 'login' == request.path %}
-								class="nav-item active"
-							{% else %}
-								class="nav-item"
-							{% endif %}
-						>
-							<a href="{% url 'login' %}" class="nav-link">Login</a>
-						</li>
-						<li 
-							{% if 'register' == request.path %}
-								class="nav-item active"
-							{% else %}
-								class="nav-item"
-							{% endif %}
-						>
-							<a href="{% url 'register' %}" class="nav-link">Register</a>
-						</li>
+						{% if user.is_athenticated %}
+							<li 
+								{% if '/accounts/dashboard' == request.path %}
+									class="nav-item active"
+								{% else %}
+									class="nav-item"
+								{% endif %}
+							>
+								<a href="{% url '/accounts/dashboard' %}" class="nav-link">My dashboard</a>
+							</li>
+							<li class="nav-item ">
+								<a href="javascript:{document.getElementbyId('logout').submit()}" class="nav-link">Log out</a>
+								<form action="{% url 'logout' %}" method="POST" id="logout">
+									{% csrf_token %}
+									<input type="hidden">
+								</form>
+							</li>
+						{% else %}
+							<li 
+								{% if 'login' == request.path %}
+									class="nav-item active"
+								{% else %}
+									class="nav-item"
+								{% endif %}
+							>
+								<a href="{% url 'login' %}" class="nav-link">Login</a>
+							</li>
+							<li 
+								{% if 'register' == request.path %}
+									class="nav-item active"
+								{% else %}
+									class="nav-item"
+								{% endif %}
+							>
+								<a href="{% url 'register' %}" class="nav-link">Register</a>
+							</li>
+						{% endif %}
+						
 	        </ul>
 	      </div>
 	    </div>
