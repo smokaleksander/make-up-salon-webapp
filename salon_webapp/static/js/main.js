@@ -284,7 +284,9 @@
 
 	$('#appointment_time').timepicker();
 
-
+	setTimeout(function(){
+		$('#message').fadeOut('slow');
+	},3000);
 
 
 })(jQuery);
