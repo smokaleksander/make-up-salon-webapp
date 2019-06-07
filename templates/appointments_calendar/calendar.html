@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid'  ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right:''
+      },
+      defaultView: 'timeGridWeek',
+      defaultDate: '2019-06-12',
+      height:'auto',
+      allDaySlot:false,
+      slotEventOverlap:false,
+      businessHours: {
+        //daysOfWeek: [ 1, 2, 3, 4 ], // Monday - Thursday
+        startTime: '09:00', // a start time (10am in this example)
+        endTime: '18:00', // an end time (6pm in this example)
+        },
+      slotDuration: '01:00', // 2 hours
+      minTime:'09:00:00',
+      maxTime:'18:00:00',
+      weekends: false,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+      select: function(arg) {
+        var title = prompt('Event Title:');
+        if (title) {
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          })
+        }
+        calendar.unselect()
+      },
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        {% if appointments %}
+            {% for app in appointments %}
+                {
+                    id:'{{app.id}}',
+                    start:'{{app.start_time}}',
+                    end:'{{app.end_time}}]',
+                },
+                
+                
+            {% endfor %}
+        {% endif %}
+      ],
+      eventColor: 'red',
+      eventTextColor:'#FFFFFF',
+    });
+    calendar.render();
+  });
+</script>
+<style>
+body {
+    margin: 40px 10px;
+    padding: 0;
+    font-size: 14px;
+  }
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>
+<div class='container justify-content-center'>
+    <form action='{% url 'filter' %}'>
+        <div class="row my-2-1 justify-content-center">
+        
+            <div class="col-sm-3 col-md-2 col-5">
+                <label style="font-weight:bold;">Service type</label>
+            </div>
+            <div class="col-sm-3 col-md-2 col-5">
+                <select class='custom-select mr-sm-2' name='worker'>
+                    <option selected='true' disabled='disabled'>choose expert</option>
+                    {% for k,v in expert_choices.items %}
+                        <option value="{{v}}">{{k}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 col-2">
+                <button  type="submit" class='btn btn-outline-dark'>filter</button>
+            </div>
+       </div>
+    </form>
+    <div class='my-3' id='calendar'></div>
+</div>
+
+
+{% endblock content %}

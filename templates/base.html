@@ -27,6 +27,15 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+    {% if '/booking' == request.path %}
+        <link rel="stylesheet" href=" {% static 'css/fullcalendar/core/main.min.css' %} ">
+        <link rel="stylesheet" href=" {% static 'css/fullcalendar/daygrid/main.min.css' %} ">
+        <link rel="stylesheet" href=" {% static 'css/fullcalendar/timegrid/main.min.css' %} ">
+        <script src="{% static 'js/fullcalendar/core/main.min.js' %}"></script>
+        <script src="{% static 'js/fullcalendar/daygrid/main.min.js' %}"></script>
+        <script src="{% static 'js/fullcalendar/interaction/main.min.js' %}"></script>
+        <script src="{% static 'js/fullcalendar/timegrid/main.min.js' %}"></script>
+    {% endif %}
 </head>
 <body>
     <!--NAVBAR-->
