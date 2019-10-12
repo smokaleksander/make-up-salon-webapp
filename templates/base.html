@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Pretty - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Pretty make up salon {% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
-    {% if '/booking' == request.path %}
+    {% if request.path == "/booking/" %}
         <link rel="stylesheet" href=" {% static 'css/fullcalendar/core/main.min.css' %} ">
         <link rel="stylesheet" href=" {% static 'css/fullcalendar/daygrid/main.min.css' %} ">
         <link rel="stylesheet" href=" {% static 'css/fullcalendar/timegrid/main.min.css' %} ">
@@ -35,7 +35,9 @@
         <script src="{% static 'js/fullcalendar/daygrid/main.min.js' %}"></script>
         <script src="{% static 'js/fullcalendar/interaction/main.min.js' %}"></script>
         <script src="{% static 'js/fullcalendar/timegrid/main.min.js' %}"></script>
+        <script src="{% static 'js/moment.min.js' %}"></script>
     {% endif %}
+    
 </head>
 <body>
     <!--NAVBAR-->

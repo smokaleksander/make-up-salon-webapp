@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'accounts.apps.AccountsConfig',
     'appointments_calendar.apps.AppointmentsCalendarConfig',
+    'contact_form.apps.ContactFormConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -141,3 +142,13 @@ MESSAGE_TAGS = {
 }
 
 AUTH_USER_MODEL = 'accounts.User'
+
+#sendgrid setup
+EMAIL_HOST='smtp.sendgrid.net'
+EMAIL_HOST_USER='apikey'
+EMAIL_HOST_PASSWORD='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'
+EMAIL_PORT=587
+EMAIL_HOST_TLS=True
+DEFAULT_FROM_EMAIL='smokaleksander@gmail.com'
+ACCOUNT_EMAIL_SUBJECT_PREFIX='contact email received from website'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

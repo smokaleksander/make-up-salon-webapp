@@ -1,6 +1,7 @@
-from .models import Expert
+from .models import Expert, Service
 
 experts= Expert.objects.all()
-expert_choices={}
-for e in experts:
-    expert_choices[e]=e.id
+expert_choices=experts
+
+services=Service.objects.all()
+service_choices=services

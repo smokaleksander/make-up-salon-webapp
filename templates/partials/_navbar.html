@@ -1,7 +1,8 @@
 {% load static %}
 <!-- NAVBAR -->
     <div 
-			{% if '/accounts/dashboard' == request.path %}
+
+			{% if '/accounts/dashboard' == request.path or request.path == "/booking/" %}
 				class="hero-wrap js-fullheight d-none"
 			{% else %}
 				class="hero-wrap js-fullheight" style="background-image: url({% static 'img/bg_1.jpg' %});" data-stellar-background-ratio="0.5"
@@ -18,9 +19,9 @@
           		</a>
           	</div>
             <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Beauty Salon</h1>
-            <p class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Created by <a href="#">Colorlib.com</a></p>
+            
 
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><a href="https://vimeo.com/45830194" class="btn btn-white btn-outline-white px-4 py-3">View Our Services</a></p>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><a href="{% url 'services' %}" class="btn btn-white btn-outline-white px-4 py-3">View Our Services</a></p>
           </div>
         </div>
       </div>
@@ -28,7 +29,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Pretty</a>
+	      <a class="navbar-brand" href="{% url 'index' %}">Pretty</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -45,7 +46,7 @@
 							<a href="{% url 'index' %}" class="nav-link">Home</a>
 						</li>
 	          <li 
-							{% if 'about' == request.path %}
+							{% if '/about' == request.path %}
 								class="nav-item active"
 							{% else %}
 								class="nav-item"
@@ -54,7 +55,7 @@
 							<a href="{% url 'about' %}" class="nav-link">About</a>
 						</li>
 	          <li 
-							{% if 'services' == request.path %}
+							{% if '/services' == request.path %}
 								class="nav-item active"
 							{% else %}
 								class="nav-item"
@@ -65,12 +66,18 @@
 	          <li class="nav-item">
 							<a href="work.html" class="nav-link">Work</a>
 						</li>
-	          <li class="nav-item">
-							<a href="contact.html" class="nav-link">Contact</a>
+	          <li 
+			  				{% if '/contact' == request.path %}
+								class="nav-item active"
+							{% else %}
+								class="nav-item"
+							{% endif %}
+						>
+							<a href="{% url 'contact' %}" class="nav-link">Contact</a>
 						</li>
 						{% if user.is_authenticated %}
 							<li 
-								{% if 'accounts/dashboard' == request.path %}
+								{% if '/accounts/dashboard' == request.path %}
 									class="nav-item active"
 								{% else %}
 									class="nav-item"
@@ -87,7 +94,7 @@
 							</li>
 						{% else %}
 							<li 
-								{% if 'login' == request.path %}
+								{% if '/accounts/login' == request.path %}
 									class="nav-item active"
 								{% else %}
 									class="nav-item"

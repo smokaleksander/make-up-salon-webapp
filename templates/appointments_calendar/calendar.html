@@ -2,6 +2,13 @@
 {% load static %}
 {% block content %}
 <script>
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  };
+  console.log('{{choosen_worker}}')
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -26,10 +33,18 @@
       maxTime:'18:00:00',
       weekends: false,
       navLinks: true, // can click day/week names to navigate views
+      select: function(event, jsEvent, view) {
+        $('#time').val(addZero(event.start.getHours()) +":"+ addZero(event.start.getMinutes()));
+        $('#time_start').val(moment(event.start).format('YYYY-MM-DD HH:mm'));
+        $('#time_end').val(moment(event.end).format('YYYY-MM-DD HH:mm'));
+        $('#day').val(addZero(event.start.getDate())+"."+addZero(event.start.getMonth()+1)+"."+event.start.getFullYear());
+        $('#calendarModal').modal();
+      },
       selectable: true,
       selectMirror: true,
+      /*
       select: function(arg) {
-        var title = prompt('Event Title:');
+        var title = prompt('spoko:');
         if (title) {
           calendar.addEvent({
             title: title,
@@ -40,7 +55,8 @@
         }
         calendar.unselect()
       },
-      editable: true,
+      */
+      editable: false,
       eventLimit: true, // allow "more" link when too many events
       events: [
         {% if appointments %}
@@ -62,38 +78,114 @@
   });
 </script>
 <style>
-body {
-    margin: 40px 10px;
-    padding: 0;
-    font-size: 14px;
-  }
+
   #calendar {
     max-width: 900px;
     margin: 0 auto;
   }
+  .readonly{
+    textarea 
+    background: 0;
+    border: 0;
+    width: 100%;
+    overflow: visible;
+    outline: 0;
+    height: auto;
+  }
 </style>
-<div class='container justify-content-center'>
-    <form action='{% url 'filter' %}'>
-        <div class="row my-2-1 justify-content-center">
+<div class='container justify-content-center my-4'>
+      <form class="my-5" action="{% url 'booking'%}">
+        <div class="row  justify-content-center">
         
-            <div class="col-sm-3 col-md-2 col-5">
-                <label style="font-weight:bold;">Service type</label>
+            <div class="col-sm-3 col-md-2 col-5 ">
+                <label class="float-right mt-2" style="font-weight:bold;">Worker:</label>
             </div>
             <div class="col-sm-3 col-md-2 col-5">
-                <select class='custom-select mr-sm-2' name='worker'>
-                    <option selected='true' disabled='disabled'>choose expert</option>
-                    {% for k,v in expert_choices.items %}
-                        <option value="{{v}}">{{k}}</option>
+                <select class='custom-select mr-sm-2' name='worker_choice' id='worker_choice' >
+                    
+                    {% for i in expert_choices %}
+                      {% if choosen_worker == i.id %}
+                        <option selected='true' value="{{i.id}}">{{i.name}} {{i.lastname}}</option>
+                      {% else %}
+                        <option value="{{i.id}}">{{i.name}} {{i.lastname}}</option>
+                      {% endif %}
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-2 col-2">
-                <button  type="submit" class='btn btn-outline-dark'>filter</button>
+                <button type='submit' class='btn btn-outline-dark'>filter</button>
             </div>
-       </div>
-    </form>
-    <div class='my-3' id='calendar'></div>
+        </div>
+      </form>
+    <div class='my-5' id='calendar'></div>
 </div>
 
+<!--modal-->
+<div id="calendarModal" class="modal fade">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="modalTitle" class="modal-title">Book appointment</h4>
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button> 
+        </div>
+        <form  action="{% url 'book' %}" method="POST">
+          {% csrf_token %}
+          <div id="modalBody" class="modal-body">
+          
+            
+            <div class="row  justify-content-left">
+              <div class="col-sm-2 ">
+                <label style="font-weight:bold;">Day:</label>
+              </div>
+              <div class="col-sm-5">
+                <input id='day' class="readonly" type="text" name="day" value="" readonly>
+              </div>
+            </div>
 
+            <div class="row  justify-content-left">
+              <div class="col-sm-2 ">
+                <label style="font-weight:bold;">Hour:</label>
+              </div>
+              <div class="col-sm-5">
+                <input id='time' class="readonly" type="text"  value="" readonly>
+                <input id='time_start' class="d-none" type="datetime" name="time_start" value="" readonly>
+                <input id='time_end' class="d-none" type="datetime" name="time_end" value="" readonly>
+              </div>
+            </div>
+            <div class="row  justify-content-left">
+              <div class="col-sm-2 ">
+                <label style="font-weight:bold;">Worker:</label>
+              </div>
+              <div class="col-sm-5">
+                <input id='worker' class="readonly" type="text" name="worker" readonly 
+                {% if appointments %}
+                  {% for app in appointments %}
+                    value="{{app.worker}}" 
+                  {% endfor %}
+                {% endif %}
+                >
+              </div>
+            </div>
+            <div class="row  justify-content-left">
+              <div class="col-sm-2 ">
+                <label style="font-weight:bold;">Service:</label>
+              </div>
+              <div class="col-sm-5">
+                <select class='custom-select mr-sm-2' name='service' id='service' >
+                    <option selected='true' disabled='disabled'>choose service</option>
+                    {% for i in service_choices %}
+                        <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+            </div>
+          
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-default" >Save</button>
+          </div>
+        </form>
+    </div>
+</div>
+</div>
 {% endblock content %}

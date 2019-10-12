@@ -55,8 +55,10 @@
                                         {% endif %}
                                         id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail rounded-circle" />
                                     <div class="middle">
-                                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
-                                        <input type="file" style="display: none;" id="profilePicture" name="file" />
+                                        <form enctype="multipart/form-data" action="/upload/image" method="post">
+                                            <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
+                                            <input type="file" style="display: none;" id="profilePicture" name="file" />
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="userData ml-3 ">
